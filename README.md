@@ -42,28 +42,28 @@
 
 | Column           | Type       | Options                        |
 | ---------------- | ---------- | -------------------------------|
-| buyer            | string     | null: false                    |
+| user             | references | null: false, foreign_key: true |
 | item             | references | null: false, foreign_key: true |
-| shipping_address | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
-- has_one :item
+- belongs_to :item
 - has_one :shipping_address
 
 ## shipping_addresses テーブル
 
-| Column             | Type      | Options                        |
-| ------------------ | --------- | ------------------------------ |
-| postal_code        | string    | null: false                    |
-| prefecture_id      | integer   | null: false                    |
-| municipality       | string    | null: false                    |
-| address            | string    | null: false                    |
-| building           | string    |                                |
-| telephone_number   | string    | null: false                    |
+| Column             | Type       | Options                        |
+| ------------------ | ---------- | ------------------------------ |
+| postal_code        | string     | null: false                    |
+| prefecture_id      | integer    | null: false                    |
+| municipality       | string     | null: false                    |
+| address            | string     | null: false                    |
+| building           | string     |                                |
+| telephone_number   | string     | null: false                    |
+| purchase_record    | references | null: false, foreign_key: true |
 
 
 ### Association
 
-- has_one :purchase_record
+- belongs_to :purchase_record
