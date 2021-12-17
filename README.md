@@ -25,7 +25,7 @@
 | item_name          | string     | null: false                    |
 | explanation        | text       | null: false                    |
 | category_id        | integer    | null: false                    |
-| statue_id          | integer    | null: false                    |
+| status_id          | integer    | null: false                    |
 | shipping_cost_id   | integer    | null: false                    |
 | prefecture_id      | integer    | null: false                    |
 | time_to_ship_id    | integer    | null: false                    |
