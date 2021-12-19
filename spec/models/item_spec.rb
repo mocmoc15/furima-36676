@@ -9,7 +9,8 @@ RSpec.describe Item, type: :model do
 
   describe "商品出品" do
     context '商品出品できるとき' do
-      it 'item_name,explanation,image,category_id,status_id,prefecture_id,shipping_cost_id,time_to_ship_id,priceが存在すれば登録できる' do
+      it 'item_name,explanation,image,category_id,status_id,prefecture_id,shipping_cost_id,time_to_ship_id,price,user_idが存在すれば登録できる' do
+
         expect(@item).to be_valid
       end
     end
@@ -60,12 +61,26 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include "Price can't be blank"
       end
-      it "priceが半角数字以外だと登録できない" do
-        @item.price = '１０００'
+      it "priceが半角数字以外が含まれていると登録できない" do
+        @item.price = '１000'
         @item.valid?
         expect(@item.errors.full_messages).to include "Price is out of setting range"
+      end
+      it "priceが300円未満だと登録できない" do
+        @item.price = '200'
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is out of setting range"
+      end
+      it "priceが9_999_999円を超えると登録できない" do
+        @item.price = '1000000000'
+        @item.valid?
+        expect(@item.errors.full_messages).to include "Price is out of setting range"
+      end
+      it "userが紐づいていなければ登録できない" do
+        @item.user = nil
+        @item.valid?
+        expect(@item.errors.full_messages).to include "User must exist"
       end
     end
   end
 end
-

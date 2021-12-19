@@ -9,6 +9,7 @@ FactoryBot.define do
     time_to_ship_id        {2}
     price                  {5000}
 
+    association :user 
 
     trait :image do
       after(:build) do |item|
@@ -18,7 +19,6 @@ FactoryBot.define do
       end
     end
 
-    association :user 
 
   end
 end
