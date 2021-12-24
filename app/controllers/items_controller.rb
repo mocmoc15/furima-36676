@@ -43,7 +43,7 @@ def destroy
     @item.destroy
     redirect_to root_path
   else
-    render :show
+    render :index
   end
 end
 
