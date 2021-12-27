@@ -11,6 +11,7 @@ class OrderAddress
     validates :address
     validates :telephone_number, format: { with: /\A[0-9]{11}\z/, message: "is too short" }
     validates :telephone_number, numericality: { only_integer: true, message: "is invalid. Input only number" }
+    validates :token
   end
   
   def save
