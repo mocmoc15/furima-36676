@@ -5,12 +5,10 @@ class OrdersController < ApplicationController
 
 
   def index
-    set_item
     @order_address = OrderAddress.new
   end
 
   def create
-    set_item
     @order_address = OrderAddress.new(order_params)
     if @order_address.valid?
       pay_item
@@ -37,7 +35,6 @@ class OrdersController < ApplicationController
   end
 
   def purchased_item
-    set_item
     if current_user.id == @item.user_id || @item.order.present?
       redirect_to root_path
     end
