@@ -3,7 +3,12 @@ require 'rails_helper'
 RSpec.describe OrderAddress, type: :model do
   describe '配送先情報の保存' do
     before do
-      @order_address = FactoryBot.build(:order_address)
+      @user = FactoryBot.create(:user)
+      @item = FactoryBot.build(:item)
+      @item.image = fixture_file_upload('public/image/065.png')
+      @item.save
+      @order_address = FactoryBot.build(:order_address, user_id: @user.id, item_id: @item.id)
+      sleep 0.1 
     end
 
     context '内容に問題ない場合' do
@@ -53,15 +58,20 @@ RSpec.describe OrderAddress, type: :model do
         @order_address.valid?
         expect(@order_address.errors.full_messages).to include("Telephone number can't be blank")
       end
-      it 'telephone_numberが10桁以上11桁以内でないと保存できない' do
-        @order_address.telephone_number = '123'
+      it 'telephone_numberが9桁以下だと保存できない' do
+        @order_address.telephone_number = '123456789'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Telephone number is too short")
+        expect(@order_address.errors.full_messages).to include("Telephone number is invalid")
+      end
+      it 'telephone_numberが12桁以上だと保存できない' do
+        @order_address.telephone_number = '1234567890123'
+        @order_address.valid?
+        expect(@order_address.errors.full_messages).to include("Telephone number is invalid")
       end
       it 'telephone_numberが半角数値でないと保存できない' do
         @order_address.telephone_number = '１２３４５６７８９１'
         @order_address.valid?
-        expect(@order_address.errors.full_messages).to include("Telephone number is too short", "Telephone number is invalid. Input only number")
+        expect(@order_address.errors.full_messages).to include("Telephone number is invalid")
       end
       it 'user_idが空だと保存できない' do
         @order_address.user_id = ''
